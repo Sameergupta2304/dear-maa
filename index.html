@@ -763,13 +763,68 @@ sendBtn.innerText = 'Send Love 🌸';
 
     let candles = 0;
 
-    document.getElementById('candleBtn').addEventListener('click', () => {
-      candles++;
-      document.getElementById('candleCounter').innerHTML = `${candles} 🕯️`;
+async function loadCandles() {
 
-      document.getElementById('candleCounter').style.boxShadow =
-        '0 0 120px rgba(255,208,150,0.4)';
-    });
+  const { data, error } = await supabaseClient
+    .from('candles')
+    .select('*')
+    .eq('id', 1)
+    .single();
+
+  if(error) {
+    console.log(error);
+    return;
+  }
+
+  candles = data.count;
+
+  document.getElementById('candleCounter').innerHTML =
+    `${candles} 🕯️`;
+
+}
+
+document.getElementById('candleBtn').addEventListener('click', async () => {
+
+  candles++;
+
+  document.getElementById('candleCounter').innerHTML =
+    `${candles} 🕯️`;
+
+  document.getElementById('candleCounter').style.boxShadow =
+    '0 0 120px rgba(255,208,150,0.4)';
+
+  const { error } = await supabaseClient
+    .from('candles')
+    .update({
+      count: candles
+    })
+    .eq('id', 1);
+
+  if(error) {
+    console.log(error);
+  }
+
+});
+
+loadCandles();
+
+supabaseClient
+  .channel('candles-channel')
+
+  .on(
+    'postgres_changes',
+    {
+      event: 'UPDATE',
+      schema: 'public',
+      table: 'candles'
+    },
+
+    () => {
+      loadCandles();
+    }
+  )
+
+  .subscribe();
 
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -810,6 +865,25 @@ sendBtn.innerText = 'Send Love 🌸';
   `;
 
   return;
+}
+async function loadCandles() {
+
+  const { data, error } = await supabaseClient
+    .from('candles')
+    .select('*')
+    .eq('id', 1)
+    .single();
+
+  if(error) {
+    console.log(error);
+    return;
+  }
+
+  candles = data.count;
+
+  document.getElementById('candleCounter').innerHTML =
+    `${candles} 🕯️`;
+
 }
 
   data.forEach(item => {
