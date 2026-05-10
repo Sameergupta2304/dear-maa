@@ -683,9 +683,6 @@ Thank you for every silent sacrifice..."></textarea>
   'asshole',
   'idiot',
   'hate',
-  'mc',
-  'bc',
-  'c',
   'matherchod',
   'bhnchod'
 ];
@@ -791,6 +788,7 @@ sendBtn.innerText = 'Send Love 🌸';
   async function loadMessages() {
 
   const loveWall = document.getElementById('loveWall');
+  loveWall.innerHTML = '';
 
   const { data, error } = await supabaseClient
     .from('messages')
