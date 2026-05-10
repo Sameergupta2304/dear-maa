@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dear Maa 🌸</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --bg: #fff8f4;
+      --cream: #fff4eb;
+      --pink: #ffdbe5;
+      --soft: #fff0f4;
+      --text: #262626;
+      --muted: #6f6f6f;
+      --glass: rgba(255,255,255,0.35);
+      --border: rgba(255,255,255,0.4);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #fff8f4 0%, #fff2f5 50%, #fff8f3 100%);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px);
+      background-size: 4px 4px;
+      opacity: 0.2;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: #fff7f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 9999;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      margin-bottom: 20px;
+    }
+
+    .loader p {
+      color: #666;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    .blob {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.35;
+      z-index: -1;
+      animation: floatBlob 12s ease-in-out infinite alternate;
+    }
+
+    .blob.one {
+      background: #ffd8e2;
+      top: -120px;
+      left: -120px;
+    }
+
+    .blob.two {
+      background: #ffe7cb;
+      bottom: -160px;
+      right: -100px;
+    }
+
+    @keyframes floatBlob {
+      from {
+        transform: translateY(0px) translateX(0px);
+      }
+      to {
+        transform: translateY(40px) translateX(30px);
+      }
+    }
+
+    .petal {
+      position: fixed;
+      top: -20px;
+      width: 14px;
+      height: 14px;
+      background: rgba(255,182,193,0.7);
+      border-radius: 70% 0 70% 0;
+      animation: fall linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
+    }
+
+    .cursor-glow {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,214,224,0.35), transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 22px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(18px);
+      background: rgba(255,255,255,0.2);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      z-index: 1000;
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .nav-btn,
+    .hero-btn,
+    .send-btn,
+    .candle-btn {
+      border: none;
+      cursor: pointer;
+      transition: 0.35s ease;
+      font-weight: 600;
+    }
+
+    .nav-btn {
+      padding: 12px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffd2df, #ffe6d1);
+      box-shadow: 0 10px 30px rgba(255,192,203,0.25);
+    }
+
+    .nav-btn:hover,
+    .hero-btn:hover,
+    .send-btn:hover,
+    .candle-btn:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 120px 8%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 8vw, 7rem);
+      line-height: 0.95;
+      margin-bottom: 28px;
+    }
+
+    .hero-text p {
+      font-size: 1.08rem;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 36px;
+    }
+
+    .hero-btn {
+      padding: 16px 30px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffcddd, #ffe7cf);
+      box-shadow: 0 15px 40px rgba(255,192,203,0.3);
+    }
+
+    .hero-image {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-glow {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(255,214,224,0.5), transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 40px;
+      object-fit: cover;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+    }
+
+    .glass-card {
+      width: 100%;
+      max-width: 1200px;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 36px;
+      padding: 60px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 50px;
+      line-height: 1.8;
+    }
+
+    .tribute {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .tribute img {
+      width: 100%;
+      border-radius: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    }
+
+    .tribute-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      margin-bottom: 22px;
+    }
+
+    .tribute-content p {
+      line-height: 2;
+      color: #555;
+    }
+
+    .letter-box {
+      background: rgba(255,255,255,0.45);
+      border-radius: 28px;
+      padding: 30px;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 250px;
+      border: none;
+      outline: none;
+      resize: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      line-height: 2;
+      font-size: 1rem;
+      color: #444;
+    }
+
+    textarea::placeholder {
+      color: #888;
+    }
+
+    .letter-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .char-count {
+      color: #777;
+      font-size: 0.92rem;
+    }
+
+    .send-btn {
+      padding: 14px 28px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffc7d7, #ffe5c7);
+      box-shadow: 0 10px 30px rgba(255,192,203,0.25);
+    }
+
+    .love-wall {
+      columns: 3 280px;
+      column-gap: 24px;
+    }
+
+    .message-card {
+      break-inside: avoid;
+      margin-bottom: 24px;
+      background: rgba(255,255,255,0.45);
+      border-radius: 28px;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,0.45);
+      transition: 0.35s ease;
+      transition: 0.4s ease;
+    }
+
+    .message-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255,255,255,0.6);
+    }
+
+    .message-card p {
+      line-height: 1.9;
+      color: #444;
+      margin-bottom: 18px;
+    }
+
+    .message-card span {
+      color: #777;
+      font-size: 0.92rem;
+    }
+
+    .candle-section {
+      background: linear-gradient(180deg, #2d2330 0%, #1f1a24 100%);
+      color: white;
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .candle-circle {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      box-shadow: 0 0 80px rgba(255,208,150,0.18);
+      transition: 0.4s ease;
+    }
+
+    .candle-btn {
+      margin-top: 30px;
+      padding: 16px 34px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffd3b0, #ffe8c7);
+      color: #222;
+    }
+
+    .ending {
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .ending h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      margin-bottom: 24px;
+    }
+
+    .ending p {
+      color: #666;
+      max-width: 700px;
+      line-height: 2;
+      font-size: 1.08rem;
+    }
+
+    footer {
+      padding: 40px 8%;
+      text-align: center;
+      color: #777;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .tribute {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        text-align: center;
+      }
+
+      .hero-text p {
+        margin-inline: auto;
+      }
+
+      .glass-card {
+        padding: 40px 24px;
+      }
+
+      .hero-image img {
+        max-width: 340px;
+      }
+
+      nav {
+        padding: 18px 6%;
+      }
+
+      section {
+        padding: 120px 6%;
+      }
+
+      .letter-footer {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loader" id="loader">
+    <h1>Dear Maa 🌸</h1>
+    <p>For the women who loved us first.</p>
+  </div>
+
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="cursor-glow" id="glow"></div>
+
+  <nav>
+    <div class="logo">Dear Maa 🌸</div>
+    <button class="nav-btn" onclick="scrollToSection('letter')">
+      Write A Letter
+    </button>
+  </nav>
+
+  <section class="hero fade-up">
+
+    <div class="hero-text">
+      <h1>
+        Dear<br>
+        Maa.
+      </h1>
+
+      <p>
+        I made this website for my mother.
+        But if you are here today… maybe this is for yours too.
+        A place filled with gratitude, memories, emotions,
+        and the words we often forget to say.
+      </p>
+
+      <button class="hero-btn" onclick="scrollToSection('letter')">
+        Write Something For Mom 💌
+      </button>
+    </div>
+
+    <div class="hero-image">
+      <div class="image-glow"></div>
+      <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1200&auto=format&fit=crop" alt="Mother">
+    </div>
+
+  </section>
+
+  <section>
+    <div class="glass-card tribute fade-up">
+
+      <img src="/matashree.jpeg" alt="Mother Tribute">
+
+      <div class="tribute-content">
+        <h3>For My Maa ❤️</h3>
+
+        <p>
+          She never asked for luxury.
+          Never demanded attention.
+          Never stopped loving.
+          Even on the days she was tired.
+          Even on the days life was unfair.
+          This small space on the internet exists because one woman silently gave everything she had.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="letter">
+    <div class="glass-card fade-up">
+
+      <h2 class="section-title">Write A Letter 💌</h2>
+
+      <p class="section-sub">
+        Say something you never got the chance to say.
+      </p>
+
+      <div class="letter-box">
+
+        <textarea id="messageInput" maxlength="300" placeholder="Dear Maa,
+
+Thank you for every silent sacrifice..."></textarea>
+
+        <div class="letter-footer">
+          <div class="char-count" id="charCount">0 / 300</div>
+
+          <button class="send-btn" id="sendBtn">
+            Send Love 🌸
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="glass-card fade-up">
+
+      <h2 class="section-title">Messages For Mothers 🌍</h2>
+
+      <p class="section-sub">
+        Tiny emotions from people around the world.
+      </p>
+
+      <div class="love-wall" id="loveWall">
+      </div>
+
+    </div>
+  </section>
+
+  <section class="candle-section fade-up">
+
+    <div class="candle-circle" id="candleCounter">
+      0 🕯️
+    </div>
+
+    <h2 class="section-title">Light A Candle</h2>
+
+    <p class="section-sub" style="color: rgba(255,255,255,0.7); max-width: 600px;">
+      A tiny light for every mother who stayed strong for her family.
+    </p>
+
+    <button class="candle-btn" id="candleBtn">
+      Light A Candle ✨
+    </button>
+
+  </section>
+
+  <section class="ending fade-up">
+
+    <h2>
+      Call your mother today.
+    </h2>
+
+    <p>
+      One day, you will wish for one more conversation,
+      one more hug, one more moment.
+      Don’t let love stay unspoken.
+    </p>
+
+  </section>
+
+  <footer>
+    Built with love for mothers everywhere 🌸<br>
+    Dear Maa © 2026
+  </footer>
+
+  <script>
+    let lastMessageTime = 0;
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 2200);
+    });
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, {
+      threshold: 0.15
+    });
+
+    document.querySelectorAll('.fade-up').forEach(el => {
+      observer.observe(el);
+    });
+
+    for (let i = 0; i < 24; i++) {
+      const petal = document.createElement('div');
+      petal.classList.add('petal');
+
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (7 + Math.random() * 8) + 's';
+      petal.style.opacity = Math.random();
+      petal.style.width = petal.style.height = (8 + Math.random() * 10) + 'px';
+
+      document.body.appendChild(petal);
+    }
+
+    const glow = document.getElementById('glow');
+
+    window.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+
+    const input = document.getElementById('messageInput');
+    const charCount = document.getElementById('charCount');
+
+    input.addEventListener('input', () => {
+      charCount.innerText = `${input.value.length} / 300`;
+    });
+
+    document.getElementById('sendBtn').addEventListener('click', async () => {
+
+  const message = input.value.trim();
+  const bannedWords = [
+  'fuck',
+  'shit',
+  'bitch',
+  'asshole',
+  'idiot',
+  'hate',
+  'mc',
+  'bc',
+  'c',
+  'matherchod',
+  'bhnchod'
+];
+
+const lowerMessage = message.toLowerCase();
+
+const containsBadWord = bannedWords.some(word =>
+  lowerMessage.includes(word)
+);
+
+if(containsBadWord) {
+
+  alert('Please keep messages respectful 🌸');
+
+  return;
+}
+
+  if(message.length < 5) {
+  alert('Your message is too short 🌸');
+  return;
+}
+
+if(message.length > 300) {
+  alert('Message is too long 🌸');
+  return;
+}
+
+  if(message === '') {
+    alert('Write something for your maa first 🌸');
+    return;
+  }
+const now = Date.now();
+
+if(now - lastMessageTime < 15000) {
+
+  alert('Please wait 15 seconds before sending another message 🌸');
+
+  return;
+}
+  const sendBtn = document.getElementById('sendBtn');
+
+  
+  sendBtn.disabled = true;
+sendBtn.innerText = 'Sending...';
+
+  const { data, error } = await supabaseClient
+    .from('messages')
+    .insert([
+      {
+        message: message,
+        country: 'India'
+      }
+      
+    ]);
+
+  if(error) {
+    console.log(error);
+
+    alert('Something went wrong 🌸');
+
+    
+    sendBtn.disabled = false;
+sendBtn.innerText = 'Send Love 🌸';
+
+    return;
+  }
+
+  alert('Your love has been shared 🌸');
+  loadMessages();
+
+  input.value = '';
+
+  charCount.innerText = '0 / 300';
+
+  sendBtn.innerText = 'Send Love 🌸';
+
+});
+
+    let candles = 0;
+
+    document.getElementById('candleBtn').addEventListener('click', () => {
+      candles++;
+      document.getElementById('candleCounter').innerHTML = `${candles} 🕯️`;
+
+      document.getElementById('candleCounter').style.boxShadow =
+        '0 0 120px rgba(255,208,150,0.4)';
+    });
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+
+   
+
+  const supabaseUrl = 'https://smdeubwdkugaagelyvud.supabase.co';
+  const supabaseKey = 'sb_publishable_tFg8rfL9XNtGURgJ9ZFUew_K-RL7weV';
+
+  const supabaseClient = window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+  );
+
+  async function loadMessages() {
+
+  const loveWall = document.getElementById('loveWall');
+
+  const { data, error } = await supabaseClient
+    .from('messages')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(30);
+
+  if(error) {
+    console.log(error);
+    return;
+  }
+
+  if(data.length === 0) {
+
+  loveWall.innerHTML = `
+    <div class="message-card">
+      <p>Be the first to leave a message for maa 🌸</p>
+    </div>
+  `;
+
+  return;
+}
+
+  data.forEach(item => {
+
+    const card = document.createElement('div');
+
+    card.classList.add('message-card');
+    card.style.opacity = '0';
+card.style.transform = 'translateY(20px)';
+
+    const text = document.createElement('p');
+text.innerText = `"${item.message}"`;
+
+const author = document.createElement('span');
+const date = new Date(item.created_at);
+
+const timeAgo = date.toLocaleDateString();
+
+author.innerText = `— Anonymous 🌸 • ${timeAgo}`;
+
+card.appendChild(text);
+card.appendChild(author);
+
+    loveWall.appendChild(card);
+    setTimeout(() => {
+
+  card.style.opacity = '1';
+  card.style.transform = 'translateY(0)';
+
+}, 100);
+
+  });
+
+}
+
+loadMessages();
+supabaseClient
+  .channel('messages-channel')
+
+  .on(
+    'postgres_changes',
+    {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'messages'
+    },
+
+    () => {
+      loadMessages();
+    }
+  )
+
+  .subscribe();
+</script>
+
+</body>
+</html>
