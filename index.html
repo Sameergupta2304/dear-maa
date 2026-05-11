@@ -786,7 +786,7 @@ sendBtn.innerText = 'Send Love 🌸';
     .from('messages')
     .select('*')
     .order('created_at', { ascending: false })
-    .limit(30);
+    .limit(50);
 
   if(error) {
     console.log(error);
